@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ContactModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Address">
+    <Key>
+      <PropertyRef Name="AddressId" />
+    </Key>
+    <Property Name="AddressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Street" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="StreetType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="State" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Zip" Type="Int32" />
+    <Property Name="StreeNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Direction" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="SubjectAddresses" Relationship="ContactModel.FK__SubjectAd__Addre__4D94879B" FromRole="Address" ToRole="SubjectAddress" />
+  </EntityType>
+  <EntityType Name="Name">
+    <Key>
+      <PropertyRef Name="SubjectId" />
+    </Key>
+    <Property Name="SubjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Mi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Suffix" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="SubjectAddresses" Relationship="ContactModel.FK__SubjectAd__Subje__4CA06362" FromRole="Name" ToRole="SubjectAddress" />
+  </EntityType>
+  <EntityContainer Name="ContactEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Addresses" EntityType="Self.Address" />
+    <EntitySet Name="Names" EntityType="Self.Name" />
+    <EntitySet Name="SubjectAddresses" EntityType="ContactModel.SubjectAddress" />
+    <AssociationSet Name="FK__SubjectAd__Addre__4D94879B" Association="ContactModel.FK__SubjectAd__Addre__4D94879B">
+      <End Role="Address" EntitySet="Addresses" />
+      <End Role="SubjectAddress" EntitySet="SubjectAddresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SubjectAd__Subje__4CA06362" Association="ContactModel.FK__SubjectAd__Subje__4CA06362">
+      <End Role="Name" EntitySet="Names" />
+      <End Role="SubjectAddress" EntitySet="SubjectAddresses" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="SubjectAddress">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="SubjectId" Type="Int32" />
+    <Property Name="AddressId" Type="Int32" />
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Address" Relationship="ContactModel.FK__SubjectAd__Addre__4D94879B" FromRole="SubjectAddress" ToRole="Address" />
+    <NavigationProperty Name="Name" Relationship="ContactModel.FK__SubjectAd__Subje__4CA06362" FromRole="SubjectAddress" ToRole="Name" />
+  </EntityType>
+  <Association Name="FK__SubjectAd__Addre__4D94879B">
+    <End Type="ContactModel.Address" Role="Address" Multiplicity="0..1" />
+    <End Type="ContactModel.SubjectAddress" Role="SubjectAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Address">
+        <PropertyRef Name="AddressId" />
+      </Principal>
+      <Dependent Role="SubjectAddress">
+        <PropertyRef Name="AddressId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SubjectAd__Subje__4CA06362">
+    <End Type="ContactModel.Name" Role="Name" Multiplicity="0..1" />
+    <End Type="ContactModel.SubjectAddress" Role="SubjectAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Name">
+        <PropertyRef Name="SubjectId" />
+      </Principal>
+      <Dependent Role="SubjectAddress">
+        <PropertyRef Name="SubjectId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ContactModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Address">
+    <Key>
+      <PropertyRef Name="AddressId" />
+    </Key>
+    <Property Name="AddressId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Street" Type="nvarchar" MaxLength="100" />
+    <Property Name="StreetType" Type="nvarchar" MaxLength="50" />
+    <Property Name="City" Type="nvarchar" MaxLength="100" />
+    <Property Name="State" Type="nvarchar" MaxLength="100" />
+    <Property Name="Zip" Type="int" />
+    <Property Name="StreeNumber" Type="nvarchar" MaxLength="10" />
+    <Property Name="Direction" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Name">
+    <Key>
+      <PropertyRef Name="SubjectId" />
+    </Key>
+    <Property Name="SubjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="500" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="500" />
+    <Property Name="Mi" Type="nvarchar" MaxLength="100" />
+    <Property Name="Suffix" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="SubjectAddress">
+    <Key>
+      <PropertyRef Name="SubjectId" />
+      <PropertyRef Name="AddressId" />
+    </Key>
+    <Property Name="SubjectId" Type="int" Nullable="false" />
+    <Property Name="AddressId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__SubjectAd__Addre__52593CB8">
+    <End Role="Address" Type="Self.Address" Multiplicity="1" />
+    <End Role="SubjectAddress" Type="Self.SubjectAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Address">
+        <PropertyRef Name="AddressId" />
+      </Principal>
+      <Dependent Role="SubjectAddress">
+        <PropertyRef Name="AddressId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SubjectAd__Subje__5165187F">
+    <End Role="Name" Type="Self.Name" Multiplicity="1" />
+    <End Role="SubjectAddress" Type="Self.SubjectAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Name">
+        <PropertyRef Name="SubjectId" />
+      </Principal>
+      <Dependent Role="SubjectAddress">
+        <PropertyRef Name="SubjectId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ContactModelStoreContainer">
+    <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Name" EntityType="Self.Name" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SubjectAddress" EntityType="Self.SubjectAddress" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__SubjectAd__Addre__52593CB8" Association="Self.FK__SubjectAd__Addre__52593CB8">
+      <End Role="Address" EntitySet="Address" />
+      <End Role="SubjectAddress" EntitySet="SubjectAddress" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SubjectAd__Subje__5165187F" Association="Self.FK__SubjectAd__Subje__5165187F">
+      <End Role="Name" EntitySet="Name" />
+      <End Role="SubjectAddress" EntitySet="SubjectAddress" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

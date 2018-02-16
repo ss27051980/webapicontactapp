@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ContactModelStoreContainer" CdmEntityContainer="ContactEntities">
+    <EntitySetMapping Name="Addresses">
+      <EntityTypeMapping TypeName="ContactModel.Address">
+        <MappingFragment StoreEntitySet="Address">
+          <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+          <ScalarProperty Name="Street" ColumnName="Street" />
+          <ScalarProperty Name="StreetType" ColumnName="StreetType" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Zip" ColumnName="Zip" />
+          <ScalarProperty Name="StreeNumber" ColumnName="StreeNumber" />
+          <ScalarProperty Name="Direction" ColumnName="Direction" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Names">
+      <EntityTypeMapping TypeName="ContactModel.Name">
+        <MappingFragment StoreEntitySet="Name">
+          <ScalarProperty Name="SubjectId" ColumnName="SubjectId" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Mi" ColumnName="Mi" />
+          <ScalarProperty Name="Suffix" ColumnName="Suffix" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="SubjectAddress" TypeName="ContactModel.SubjectAddress" StoreEntitySet="SubjectAddress">
+      <EndProperty Name="Address">
+        <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+      </EndProperty>
+      <EndProperty Name="Name">
+        <ScalarProperty Name="SubjectId" ColumnName="SubjectId" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>
